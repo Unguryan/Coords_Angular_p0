@@ -28,7 +28,7 @@ import { SignalrService } from './signalr.service';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-
+    
 
     HttpClientModule,
     FormsModule,

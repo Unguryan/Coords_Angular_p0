@@ -4,21 +4,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
 
-export class HomeComponent implements OnInit {
 
+export class HomeComponent {
   public loading: boolean = false;
 
   public exp_minutes: string | 0 = 0;
   public exp_seconds: string | 0 = 0;
 
   private token: string | null;
-
 
   constructor(
     private http: HttpClient,
@@ -32,7 +30,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {}
-
   getUser() {
     var url = environment.telegramAPI + "telegram/token/" + this.token;
     this.http.get<TokenResult>(url,
