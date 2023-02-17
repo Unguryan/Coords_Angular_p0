@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 
 import { SignalrService } from './signalr.service';
 
+import { MapViewComponent } from './map-view/map-view.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,13 @@ import { SignalrService } from './signalr.service';
     //CounterComponent,
     //FetchDataComponent,
 
-    LoginComponent
+    LoginComponent,
+
+    MapViewComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    
+    LeafletModule,
 
     HttpClientModule,
     FormsModule,
