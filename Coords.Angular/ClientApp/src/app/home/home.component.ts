@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import * as Leaflet from 'leaflet';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +13,13 @@ import { environment } from '../../environments/environment';
 
 
 export class HomeComponent {
+  public latlng: Leaflet.LatLng | undefined;
+
+  eventsSubject: Subject<void> = new Subject<void>();
+  emitRevomeMarkerEvent() {
+    this.eventsSubject.next();
+  }
+
   public loading: boolean = false;
 
   public exp_minutes: string | 0 = 0;
@@ -29,52 +38,79 @@ export class HomeComponent {
     }
   }
 
-  ngOnInit() {}
-  getUser() {
-    var url = environment.telegramAPI + "telegram/token/" + this.token;
-    this.http.get<TokenResult>(url,
+  ngOnInit() { }
+
+  sendCoords(form: NgForm) {
+
+    var details = form.value.details;
+
+    if (this.token == null || this.token === "") {
+      alert("User token NOT SET");
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (this.latlng == undefined) {
+      alert("Coords NOT SET");
+      return;
+    }
+
+    /*const data = JSON.stringify(form.value);*/
+
+    var data = {
+      Details: details,
+      Longitude: this.latlng.lng,//y
+      Latitude: this.latlng.lat,//x
+      UserToken: this.token
+    };
+
+    var url = environment.coordsAPI + 'coord/create';
+
+    this.http.post(url, data,
       {
+        responseType: 'text',
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Accept': '*/*'
         }),
-      }).subscribe(result => {
-        if (result == null) {
-          localStorage.removeItem('token');
-          this.router.navigate(['']);
-          return;
-        }
+      },
+    ).subscribe(response => {
+      var res = JSON.parse(response) as SendCoordsResult;
 
-        alert("PAGE " + result.token);
-        this.setUser(result.data);
+      var resMessage = "";
+      if (res.errorMessage != null) {
+        resMessage += "\nÎøèáêà: " + res.errorMessage;
+      }
 
-      }, error => {
-        console.error(error);
+      if (res.isValid) {
+        alert("Success");
+      }
+      else {
+        alert(resMessage);
+      }
 
-        localStorage.removeItem('token');
-        this.router.navigate(['']);
-
-        //this.tryGetToken(this.key);
-
-        //localStorage.removeItem('key');
-        //this.router.navigate(['/login']);
-      });
-  }
-  setUser(data: string) {
-    var json = atob(data);
-    alert(json);
+      //window.location.reload();
     }
+    );
+
+    //alert(details);
+
+
+    //alert(Object.keys(form.value));
+  }
+
+  addlatlngData(event: Leaflet.LatLng) {
+    this.latlng = event;
+  }
+
+  removeMarker() {
+    this.latlng = undefined;
+    this.emitRevomeMarkerEvent();
+  }
 }
 
-interface User {
-  Id: string;
-  UserName: string;
-  Phone: string;
-  FullName: string;
-}
-
-interface TokenResult {
-  token: string;
-  data: string;
-  expired: Date;
+interface SendCoordsResult {
+  isValid: boolean;
+  isSent: boolean;
+  errorMessage: string | null;
 }

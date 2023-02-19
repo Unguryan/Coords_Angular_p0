@@ -9,7 +9,9 @@ import { environment } from '../environments/environment';
 export class SignalrService {
   hubUrl: string;
   connection: any;
+
   loginMessage: BehaviorSubject<string>;
+  createdCoordsMessage: BehaviorSubject<string>;
   //progressPercentage: BehaviorSubject<number>;
   //progressMessage: BehaviorSubject<string>;
 
@@ -17,6 +19,7 @@ export class SignalrService {
     this.hubUrl = environment.signalRHub;
 
     this.loginMessage = new BehaviorSubject<string>('');
+    this.createdCoordsMessage = new BehaviorSubject<string>('');
     //this.progressPercentage = new BehaviorSubject<number>(0);
     //this.progressMessage = new BehaviorSubject<string>('');
   }
@@ -43,9 +46,9 @@ export class SignalrService {
       this.loginMessage.next(message);
     });
 
-    //this.connection.on('UpdateProgressBar', (percentage: number) => {
-    //  this.progressPercentage.next(percentage);
-    //});
+    this.connection.on('CreatedCoordsNotification', (message: string) => {
+      this.createdCoordsMessage.next(message);
+    });
 
     //this.connection.on('DisplayProgressMessage', (message: string) => {
     //  this.progressMessage.next(message);

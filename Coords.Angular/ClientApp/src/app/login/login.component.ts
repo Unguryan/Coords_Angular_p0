@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   private key: string | null;
   private token: string | null;
+  private loginWindow: Window | null = null;
 
   constructor(
     private http: HttpClient,
@@ -51,15 +52,25 @@ export class LoginComponent implements OnInit {
 
      //alert("ALERT SIGNAL R: " + token);
 
-      if (token == null || token === "" || token == undefined) {
+
+      if (token == null || token === "" || token == undefined || this.key == null || this.key === "") {
         alert("TOKEN NULL");
+        return;
       }
-      else {
-        localStorage.setItem('token', token);
-        localStorage.removeItem('key');
-        this.loading = false;
-        this.router.navigate(['']);
-        window.location.reload();
+
+      if (this.key != token) {
+        return;
+      }
+
+      localStorage.setItem('token', token);
+      localStorage.removeItem('key');
+      this.loading = false;
+      this.router.navigate(['']);
+      window.location.reload();
+
+      if (this.loginWindow != null) {
+        this.loginWindow.close();
+        this.loginWindow = null;
       }
     });
   }
@@ -83,7 +94,7 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.getKeyInfo();
 
-        window.open(result.url);
+        this.loginWindow = window.open(result.url);
 
     }, error => console.error(error));
   }
@@ -183,13 +194,14 @@ export class LoginComponent implements OnInit {
           return;
         }
 
-        localStorage.setItem('token', result.token);
-        this.loading = false;
+        if (result.token != null && result.token !== "") {
+          localStorage.setItem('token', result.token);
+          this.loading = false;
 
-        localStorage.removeItem('key');
-        this.router.navigate(['']);
-        window.location.reload();
-
+          localStorage.removeItem('key');
+          this.router.navigate(['']);
+          window.location.reload();
+        }
 
       }, error => {
         console.error(error);
