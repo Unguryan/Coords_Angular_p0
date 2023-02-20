@@ -14,7 +14,15 @@ Full project contains:
 
 * For Default install: just run the project.
 * For using in Docker container: 
-```
-PM> docker-compose up
+
+Create network:
+    
+```bash
+PM> docker network create coords_net 
 ```
 
+Build up:
+    
+```bash
+PM> docker-compose up
+```
