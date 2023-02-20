@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  #web:
+  #  build: .
+  #  ports:
+  #    - 5000:5000
+  #  #volumes:
+  #  #  - ./:/project
+  #  #  - /project/node_modules
+
+  api:
+    build: .
+    ports:
+      - '5000:5000'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    restart: always
+    networks:
+      - coords_net
+
+networks:
+  coords_net:
+    name: coords_net
+    external: true
+

@@ -3,7 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coords.Angular", "Coords.Angular\Coords.Angular.csproj", "{64D3230B-869C-4482-84CD-CE0120BD68BF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{20B2F38C-A092-40E7-B96D-BBBAD4DC2EE1}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coords.Angular.UI", "Coords.Angular.UI\Coords.Angular.UI.csproj", "{5ED15BE8-186A-4DE2-B7F6-5C8B35AA6E4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +18,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{64D3230B-869C-4482-84CD-CE0120BD68BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64D3230B-869C-4482-84CD-CE0120BD68BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64D3230B-869C-4482-84CD-CE0120BD68BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64D3230B-869C-4482-84CD-CE0120BD68BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED15BE8-186A-4DE2-B7F6-5C8B35AA6E4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED15BE8-186A-4DE2-B7F6-5C8B35AA6E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED15BE8-186A-4DE2-B7F6-5C8B35AA6E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED15BE8-186A-4DE2-B7F6-5C8B35AA6E4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
