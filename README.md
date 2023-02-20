@@ -13,8 +13,12 @@ Full project contains:
 
 # Installation
 
-* For Default install: just run the project.
-* For using in Docker container: 
+* For Default install: 
+
+Just run the project.
+
+
+# For using in Docker container: 
 
 Create network:
     
