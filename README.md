@@ -1,5 +1,6 @@
 # Coords (Angular part 3)
 UI part of microservice project.
+
 Solution use: 
 * Angular like FE framework.
 * SignalR for getting notifications in realtime.
